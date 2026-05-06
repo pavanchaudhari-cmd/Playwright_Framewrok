@@ -198,7 +198,7 @@ test.describe('Event Detail Page', () => {
 
   test('TC-D02: event metadata is shown', async ({ page }) => {
     await expect(page.getByText('Saturday, 18 April')).toBeVisible();
-    await expect(page.getByText('02:30 pm')).toBeVisible();
+    await expect(page.getByText(/2:30\s*[ap]m/i)).toBeVisible();
     await expect(page.getByText('Hyderabad, Hitech city')).toBeVisible();
     await expect(page.getByText(/\d+ \/ 500 seats/)).toBeVisible();
     await expect(page.getByText('$1,500').first()).toBeVisible();

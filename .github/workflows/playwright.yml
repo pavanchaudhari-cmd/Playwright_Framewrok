@@ -60,6 +60,7 @@ jobs:
           name: api-test-results
           path: test-results/
           retention-days: 7
+          if-no-files-found: ignore
 
   test-ui:
     name: UI Tests
@@ -128,3 +129,4 @@ jobs:
           name: ui-test-results
           path: test-results/
           retention-days: 7
+          if-no-files-found: ignore

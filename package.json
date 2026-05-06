@@ -1,0 +1,45 @@
+{
+  "name": "playwright-training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:all": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:report": "npx playwright show-report",
+    "report:monocart": "npx monocart show-report monocart-report/index.html",
+    "test:ui-only": "npx playwright test --grep @ui",
+    "test:api-only": "npx playwright test --grep @api",
+    "gen-context": "node scripts/generate-context.js",
+    "gen-context:ts": "tsx scripts/generate-context.ts",
+    "gen-types": "tsx scripts/generate-types.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.6.0",
+    "@types/xlsx": "^0.0.35",
+    "js-yaml": "^4.1.1",
+    "monocart-reporter": "^2.10.1",
+    "pptxgenjs": "^4.0.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "@types/pg": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "pg": "^8.20.0",
+    "playwright": "^1.59.1",
+    "playwright-core": "^1.59.1",
+    "undici-types": "^7.19.2",
+    "xlsx": "^0.18.5",
+    "zod": "^3.25.76"
+  }
+}

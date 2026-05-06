@@ -46,9 +46,10 @@ export class MyBookingsPage {
   }
 
   async hasBookings(): Promise<boolean> {
-    return (
-      (await this.cancelBookingBtns.count()) > 0 ||
-      (await this.page.locator('article, table').count()) > 0
-    );
+    await Promise.race([
+      this.cancelBookingBtns.first().waitFor({ state: 'visible', timeout: 10_000 }),
+      this.noBookingsHeading.waitFor({ state: 'visible', timeout: 10_000 }),
+    ]).catch(() => {});
+    return (await this.cancelBookingBtns.count()) > 0;
   }
 }

@@ -33,8 +33,12 @@ export default defineConfig({
       },
     },
     {
+      name: 'db',
+      testMatch: ['**/supabase-schema.spec.ts'],
+    },
+    {
       name: 'ui',
-      testIgnore: ['**/Day2.spec.ts', '**/eventhub-api.spec.ts'],
+      testIgnore: ['**/Day2.spec.ts', '**/eventhub-api.spec.ts', '**/supabase-schema.spec.ts'],
       use: {
         ...devices['Desktop Chrome'],
         baseURL: UI_BASE_URL,

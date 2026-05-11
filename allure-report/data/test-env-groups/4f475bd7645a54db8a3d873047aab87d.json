@@ -1,0 +1,1 @@
+{"id":"4f475bd7645a54db8a3d873047aab87d","fullName":"day_3-ai-generated/eventhub-api.spec.ts:670:7","name":"TC09 - GET /api/bookings/{id} returns booking details by ID","status":"passed","testResultsByEnv":{"default":"b7b9d05029c5bb06dc0212764b1bea28"}}

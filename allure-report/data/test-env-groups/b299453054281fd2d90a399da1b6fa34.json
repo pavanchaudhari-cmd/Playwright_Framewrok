@@ -1,0 +1,1 @@
+{"id":"b299453054281fd2d90a399da1b6fa34","fullName":"day_3-ai-generated/eventhub-api.spec.ts:584:7","name":"TC02 - POST /api/bookings returns 401 without auth token","status":"passed","testResultsByEnv":{"default":"402e9990bf0fcfecef4bb0384fc07cf4"}}

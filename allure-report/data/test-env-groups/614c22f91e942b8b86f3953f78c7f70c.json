@@ -1,0 +1,1 @@
+{"id":"614c22f91e942b8b86f3953f78c7f70c","fullName":"day_3-ai-generated/eventhub-api.spec.ts:741:7","name":"TC15 - DELETE /api/bookings/{id} returns 404 for a non-existent booking","status":"passed","testResultsByEnv":{"default":"035642fb8d55d0468f99dc713c0e9fc1"}}

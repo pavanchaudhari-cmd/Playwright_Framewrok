@@ -1,0 +1,1 @@
+{"id":"b377db87e603748c1ad0e789d116da72","fullName":"day_3-ai-generated/eventhub-api.spec.ts:639:7","name":"TC06 - GET /api/bookings returns a paginated list of bookings","status":"passed","testResultsByEnv":{"default":"6d75ef49250042214a18eafca6671a38"}}

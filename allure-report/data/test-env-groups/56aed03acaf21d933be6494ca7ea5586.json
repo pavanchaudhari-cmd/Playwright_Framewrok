@@ -1,0 +1,1 @@
+{"id":"56aed03acaf21d933be6494ca7ea5586","fullName":"supabase-schema.spec.ts:47:9","name":"TC-DB06-created_at: column \"created_at\" has type=\"string\" format=\"timestamp with time zone\"","status":"passed","testResultsByEnv":{"default":"78ea644bdb26455156f3f51bfcfca368"}}

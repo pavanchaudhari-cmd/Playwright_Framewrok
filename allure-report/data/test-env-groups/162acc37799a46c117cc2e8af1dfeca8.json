@@ -1,0 +1,1 @@
+{"id":"162acc37799a46c117cc2e8af1dfeca8","fullName":"day_3-ai-generated/eventhub-api.spec.ts:546:7","name":"TC01 - POST /api/bookings creates a booking and returns a booking reference","status":"passed","testResultsByEnv":{"default":"9ea984746b8969bfafde8a4c99fe80bd"}}

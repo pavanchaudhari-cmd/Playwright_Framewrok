@@ -1,0 +1,1 @@
+{"id":"c80aaf63b3831b0a4d206de39c537e59","fullName":"day_3-ai-generated/eventhub-api.spec.ts:736:7","name":"TC14 - DELETE /api/bookings/{id} returns 401 without auth","status":"passed","testResultsByEnv":{"default":"ac64175e9ba4a5fcbd34490da8fac650"}}

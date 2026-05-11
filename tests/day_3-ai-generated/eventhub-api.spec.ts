@@ -1,5 +1,6 @@
 import { test, expect } from '../../fixtures/auth_fixtures';
 import { z } from 'zod';
+import { epic, feature, story, severity } from 'allure-js-commons';
 
 // ─── Shared credentials ───────────────────────────────────────────────────────
 const TEST_USER = {
@@ -80,7 +81,14 @@ const PaginatedBookingsSchema = z.object({
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Health & Config', { tag: ['@api', '@health', '@eventhub'] }, () => {
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API Health');
+  });
+
   test('GET /api/health - returns 200 with status ok and dbStatus', async ({ request }) => {
+    await story('Health Check');
+    await severity('blocker');
     const res = await request.get('/api/health');
 
     expect(res.status()).toBe(200);
@@ -91,6 +99,8 @@ test.describe('Health & Config', { tag: ['@api', '@health', '@eventhub'] }, () =
   });
 
   test('GET /api/config - returns feature flags', async ({ request }) => {
+    await story('Config');
+    await severity('normal');
     const res = await request.get('/api/config');
 
     expect(res.status()).toBe(200);
@@ -105,7 +115,14 @@ test.describe('Health & Config', { tag: ['@api', '@health', '@eventhub'] }, () =
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }, () => {
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('User Registration');
+  });
+
   test('TC01 - registers a new user and returns a JWT token', async ({ request }) => {
+    await severity('critical');
     const uniqueEmail = `testuser_${Date.now()}@mailinator.com`;
 
     const res = await request.post('/api/auth/register', {
@@ -121,6 +138,7 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
   });
 
   test('TC02 - returns 400 when email is already registered', async ({ request }) => {
+    await severity('normal');
     const res = await request.post('/api/auth/register', {
       data: { email: TEST_USER.email, password: 'anyPassword@1' },
     });
@@ -133,6 +151,7 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
   });
 
   test('TC03 - returns 400 when password is too short (< 6 chars)', async ({ request }) => {
+    await severity('normal');
     const res = await request.post('/api/auth/register', {
       data: { email: `short_${Date.now()}@mailinator.com`, password: '123' },
     });
@@ -143,6 +162,7 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
   });
 
   test('TC04 - returns 400 when email field is missing', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/auth/register', {
       data: { password: 'ValidPass@1' },
     });
@@ -151,6 +171,7 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
   });
 
   test('TC05 - returns 400 when password field is missing', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/auth/register', {
       data: { email: `nopw_${Date.now()}@mailinator.com` },
     });
@@ -159,6 +180,7 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
   });
 
   test('TC06 - returns 400 for an invalid email format', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/auth/register', {
       data: { email: 'not-an-email', password: 'ValidPass@1' },
     });
@@ -173,7 +195,14 @@ test.describe('POST /api/auth/register', { tag: ['@api', '@auth', '@eventhub'] }
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('POST /api/auth/login', { tag: ['@api', '@auth', '@eventhub'] }, () => {
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('User Login');
+  });
+
   test('TC01 - returns 200 with a valid JWT token on correct credentials', async ({ request }) => {
+    await severity('critical');
     const res = await request.post('/api/auth/login', { data: TEST_USER });
 
     expect(res.status()).toBe(200);
@@ -185,6 +214,7 @@ test.describe('POST /api/auth/login', { tag: ['@api', '@auth', '@eventhub'] }, (
   });
 
   test('TC02 - returns 400 for wrong password', async ({ request }) => {
+    await severity('normal');
     // API returns 400 (not 401) for invalid credentials
     const res = await request.post('/api/auth/login', {
       data: { email: TEST_USER.email, password: 'WrongPassword@99' },
@@ -197,6 +227,7 @@ test.describe('POST /api/auth/login', { tag: ['@api', '@auth', '@eventhub'] }, (
   });
 
   test('TC03 - returns 400 for non-existent email', async ({ request }) => {
+    await severity('normal');
     const res = await request.post('/api/auth/login', {
       data: { email: 'nobody_xyz_99@mailinator.com', password: 'SomePass@1' },
     });
@@ -207,6 +238,7 @@ test.describe('POST /api/auth/login', { tag: ['@api', '@auth', '@eventhub'] }, (
   });
 
   test('TC04 - returns 400 when request body is empty', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/auth/login', { data: {} });
 
     expect(res.status()).toBe(400);
@@ -219,7 +251,14 @@ test.describe('POST /api/auth/login', { tag: ['@api', '@auth', '@eventhub'] }, (
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('GET /api/auth/me', { tag: ['@api', '@auth', '@eventhub'] }, () => {
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('Token Validation');
+  });
+
   test('TC01 - returns user info for a valid bearer token', async ({ request, apiToken }) => {
+    await severity('critical');
     const res = await request.get('/api/auth/me', {
       headers: { Authorization: `Bearer ${apiToken}` },
     });
@@ -233,12 +272,14 @@ test.describe('GET /api/auth/me', { tag: ['@api', '@auth', '@eventhub'] }, () =>
   });
 
   test('TC02 - returns 401 when no Authorization header is provided', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/auth/me');
 
     expect(res.status()).toBe(401);
   });
 
   test('TC03 - returns 401 for a malformed / invalid token', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/auth/me', {
       headers: { Authorization: 'Bearer this.is.not.a.real.token' },
     });
@@ -259,7 +300,14 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
     token = apiToken;
   });
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('Event Listing');
+  });
+
   test('TC01 - returns paginated list of events', async ({ request }) => {
+    await severity('critical');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -273,6 +321,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC02 - pagination: page and limit query params work', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { page: '1', limit: '2' },
@@ -285,6 +334,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC03 - category filter returns only matching events', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { category: 'Conference' },
@@ -298,6 +348,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC04 - city filter returns only matching events', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { city: 'Hyderabad' },
@@ -311,6 +362,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC05 - search filter returns events matching the keyword', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { search: 'Tech' },
@@ -322,6 +374,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC06 - returns empty data array for a search with no matches', async ({ request }) => {
+    await severity('minor');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { search: 'zzz_no_such_event_xyz_999' },
@@ -333,6 +386,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC07 - limit=100 is the upper bound and does not error', async ({ request }) => {
+    await severity('minor');
     const res = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
       params: { limit: '100' },
@@ -342,6 +396,7 @@ test.describe('GET /api/events', { tag: ['@api', '@events', '@eventhub'] }, () =
   });
 
   test('TC08 - returns 401 without an auth token', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events');
     expect(res.status()).toBe(401);
   });
@@ -359,7 +414,14 @@ test.describe('GET /api/events/{id}', { tag: ['@api', '@events', '@eventhub'] },
     token = apiToken;
   });
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('Event Details');
+  });
+
   test('TC01 - returns event details for a valid ID', async ({ request }) => {
+    await severity('critical');
     // Fetch first available event to get a real ID
     const listRes = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
@@ -382,6 +444,7 @@ test.describe('GET /api/events/{id}', { tag: ['@api', '@events', '@eventhub'] },
   });
 
   test('TC02 - returns 404 for a non-existent event ID', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/events/999999999', {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -417,7 +480,14 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
     token = apiToken;
   });
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('Event CRUD');
+  });
+
   test('TC01 - POST /api/events creates a new event and returns 201', async ({ request }) => {
+    await severity('critical');
     const payload = { ...baseEventPayload, title: `Playwright Test Event ${Date.now()}` };
 
     const res = await request.post('/api/events', {
@@ -436,6 +506,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC02 - POST /api/events returns 401 without an auth token', async ({ request }) => {
+    await severity('normal');
     const res = await request.post('/api/events', {
       data: { ...baseEventPayload, title: 'Unauthorized Event' },
     });
@@ -444,6 +515,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC03 - POST /api/events returns 400 when required fields are missing', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/events', {
       data: { title: 'Missing Fields Event' },
       headers: { Authorization: `Bearer ${token}` },
@@ -455,6 +527,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC04 - PUT /api/events/{id} updates the event with a full payload', async ({ request }) => {
+    await severity('normal');
     test.skip(!createdEventId, 'TC01 must pass first to get a valid event ID');
 
     // PUT requires all required fields — it is a full replace, not a partial update
@@ -472,6 +545,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC05 - PUT /api/events/{id} returns 401 without auth', async ({ request }) => {
+    await severity('normal');
     test.skip(!createdEventId, 'TC01 must pass first to get a valid event ID');
 
     const res = await request.put(`/api/events/${createdEventId}`, {
@@ -482,6 +556,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC06 - PUT /api/events/{id} returns 404 for non-existent event', async ({ request }) => {
+    await severity('minor');
     // Must send a full valid payload so validation passes and the 404 can surface
     const res = await request.put('/api/events/999999999', {
       data: { ...baseEventPayload, title: 'Ghost Event' },
@@ -494,6 +569,7 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC07 - DELETE /api/events/{id} removes the event and returns success', async ({ request }) => {
+    await severity('critical');
     test.skip(!createdEventId, 'TC01 must pass first to get a valid event ID');
 
     const res = await request.delete(`/api/events/${createdEventId}`, {
@@ -513,11 +589,13 @@ test.describe('Events CRUD (authenticated)', { tag: ['@api', '@events', '@crud',
   });
 
   test('TC08 - DELETE /api/events/{id} returns 401 without auth', async ({ request }) => {
+    await severity('normal');
     const res = await request.delete('/api/events/1');
     expect(res.status()).toBe(401);
   });
 
   test('TC09 - DELETE /api/events/{id} returns 404 for non-existent event', async ({ request }) => {
+    await severity('minor');
     const res = await request.delete('/api/events/999999999', {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -543,7 +621,14 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
     token = apiToken;
   });
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('API');
+    await story('Bookings');
+  });
+
   test('TC01 - POST /api/bookings creates a booking and returns a booking reference', async ({ request }) => {
+    await severity('critical');
     // Events endpoint also requires auth
     const listRes = await request.get('/api/events', {
       headers: { Authorization: `Bearer ${token}` },
@@ -582,6 +667,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC02 - POST /api/bookings returns 401 without auth token', async ({ request }) => {
+    await severity('normal');
     const res = await request.post('/api/bookings', {
       data: {
         eventId: 1,
@@ -596,6 +682,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC03 - POST /api/bookings returns 400 when required fields are missing', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/bookings', {
       data: { eventId: 1 },
       headers: { Authorization: `Bearer ${token}` },
@@ -607,6 +694,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC04 - POST /api/bookings returns 400 when quantity is 0', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/bookings', {
       data: {
         eventId: 1,
@@ -622,6 +710,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC05 - POST /api/bookings returns 400 when quantity exceeds 10', async ({ request }) => {
+    await severity('minor');
     const res = await request.post('/api/bookings', {
       data: {
         eventId: 1,
@@ -637,6 +726,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC06 - GET /api/bookings returns a paginated list of bookings', async ({ request }) => {
+    await severity('critical');
     const res = await request.get('/api/bookings', {
       headers: { Authorization: `Bearer ${token}` },
       params: { page: '1', limit: '5' },
@@ -650,6 +740,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC07 - GET /api/bookings with status=confirmed filter returns only confirmed bookings', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/bookings', {
       headers: { Authorization: `Bearer ${token}` },
       params: { status: 'confirmed' },
@@ -663,11 +754,13 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC08 - GET /api/bookings returns 401 without auth', async ({ request }) => {
+    await severity('normal');
     const res = await request.get('/api/bookings');
     expect(res.status()).toBe(401);
   });
 
   test('TC09 - GET /api/bookings/{id} returns booking details by ID', async ({ request }) => {
+    await severity('normal');
     test.skip(!createdBookingId, 'TC01 must pass first to get a valid booking ID');
 
     const res = await request.get(`/api/bookings/${createdBookingId}`, {
@@ -683,6 +776,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC10 - GET /api/bookings/{id} returns 404 for a non-existent booking', async ({ request }) => {
+    await severity('minor');
     const res = await request.get('/api/bookings/999999999', {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -691,6 +785,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC11 - GET /api/bookings/ref/{ref} returns booking by reference code', async ({ request }) => {
+    await severity('normal');
     test.skip(!createdBookingRef, 'TC01 must pass first to get a valid booking reference');
 
     const res = await request.get(`/api/bookings/ref/${createdBookingRef}`, {
@@ -704,6 +799,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC12 - GET /api/bookings/ref/{ref} returns 404 for an invalid reference', async ({ request }) => {
+    await severity('minor');
     const res = await request.get('/api/bookings/ref/INVALID-REF-999', {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -712,6 +808,7 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC13 - DELETE /api/bookings/{id} cancels the booking', async ({ request }) => {
+    await severity('critical');
     test.skip(!createdBookingId, 'TC01 must pass first to get a valid booking ID');
 
     const res = await request.delete(`/api/bookings/${createdBookingId}`, {
@@ -734,11 +831,13 @@ test.describe('Bookings (authenticated)', { tag: ['@api', '@bookings', '@crud', 
   });
 
   test('TC14 - DELETE /api/bookings/{id} returns 401 without auth', async ({ request }) => {
+    await severity('normal');
     const res = await request.delete('/api/bookings/1');
     expect(res.status()).toBe(401);
   });
 
   test('TC15 - DELETE /api/bookings/{id} returns 404 for a non-existent booking', async ({ request }) => {
+    await severity('minor');
     const res = await request.delete('/api/bookings/999999999', {
       headers: { Authorization: `Bearer ${token}` },
     });

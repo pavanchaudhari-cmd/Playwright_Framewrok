@@ -1,0 +1,11 @@
+Available tables: [
+  'datasets',
+  'traces',
+  'eval_results',
+  'dataset_samples',
+  'projects',
+  'eval_runs',
+  'users',
+  'api_keys',
+  'alerts'
+]

@@ -12,7 +12,10 @@
     "test:api-only": "npx playwright test --grep @api",
     "gen-context": "node scripts/generate-context.js",
     "gen-context:ts": "tsx scripts/generate-context.ts",
-    "gen-types": "tsx scripts/generate-types.ts"
+    "gen-types": "tsx scripts/generate-types.ts",
+    "report:allure:generate": "allure generate --output allure-report allure-results",
+    "report:allure:open": "npx allure open allure-report",
+    "report:allure": "npm run report:allure:generate && npm run report:allure:open"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.6.0",
     "@types/xlsx": "^0.0.35",
+    "allure-playwright": "^3.7.2",
     "js-yaml": "^4.1.1",
     "monocart-reporter": "^2.10.1",
     "pptxgenjs": "^4.0.1",
@@ -34,6 +38,7 @@
   },
   "dependencies": {
     "@types/pg": "^8.20.0",
+    "docx": "^9.6.1",
     "dotenv": "^17.4.2",
     "pg": "^8.20.0",
     "playwright": "^1.59.1",

@@ -1,0 +1,1 @@
+{"id":"4b5847782e3f3f5acf09556da33fcb35","fullName":"day_3-ai-generated/eventhub-api.spec.ts:693:7","name":"TC11 - GET /api/bookings/ref/{ref} returns booking by reference code","status":"passed","testResultsByEnv":{"default":"91a197fa0eb38c9a5520ddb00eb098cf"}}

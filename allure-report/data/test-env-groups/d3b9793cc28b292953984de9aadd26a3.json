@@ -1,0 +1,1 @@
+{"id":"d3b9793cc28b292953984de9aadd26a3","fullName":"supabase-schema.spec.ts:75:7","name":"TC-DB12: created_at defaults to now()","status":"passed","testResultsByEnv":{"default":"a4bd83d69ee6a4ca257c1595f6ecd5ad"}}

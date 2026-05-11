@@ -7,17 +7,24 @@
  */
 
 import { test, expect } from '../../fixtures/auth_fixtures';
+import { epic, feature, story, severity } from 'allure-js-commons';
 
 const BASE_URL = 'https://eventhub.rahulshettyacademy.com/';
 
 test.describe('User Registration', { tag: ['@ui', '@auth', '@eventhub'] }, () => {
+
   test.beforeEach(async ({ page }) => {
     await page.goto(BASE_URL);
     await page.getByRole('link', { name: /register/i }).click();
     await page.waitForLoadState('networkidle');
+    await epic('EventHub');
+    await feature('Authentication');
   });
 
   test('TC01 - Fill registration form and create account', async ({ page }) => {
+    await story('User Registration');
+    await severity('critical');
+
     const uniqueEmail = `testuser_${Date.now()}@mailinator.com`;
 
     await page.getByPlaceholder('you@email.com').fill(uniqueEmail);
@@ -38,6 +45,9 @@ test.describe('User Registration', { tag: ['@ui', '@auth', '@eventhub'] }, () =>
   });
 
   test('TC02 - Invalid email pattern shows validation error', async ({ page }) => {
+    await story('Registration Validation');
+    await severity('normal');
+
     await page.getByPlaceholder('you@email.com').fill('invalid-email-format');
     await page.getByPlaceholder('Min 8 chars, uppercase, number & symbol').fill('Test@12345');
     await page.getByPlaceholder('Repeat your password').fill('Test@12345');

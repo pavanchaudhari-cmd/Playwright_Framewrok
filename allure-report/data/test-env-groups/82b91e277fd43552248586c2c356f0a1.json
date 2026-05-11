@@ -1,0 +1,1 @@
+{"id":"82b91e277fd43552248586c2c356f0a1","fullName":"supabase-schema.spec.ts:47:9","name":"TC-DB06-message: column \"message\" has type=\"string\" format=\"text\"","status":"passed","testResultsByEnv":{"default":"de81666405773364b114612e9d61c685"}}

@@ -1,0 +1,1 @@
+{"id":"39ef5aa5b079549d68231a08e473d4e6","fullName":"day_3-ai-generated/eventhub-api.spec.ts:420:7","name":"TC01 - POST /api/events creates a new event and returns 201","status":"passed","testResultsByEnv":{"default":"bcdb7084525c4768545c8caa442e2c12"}}

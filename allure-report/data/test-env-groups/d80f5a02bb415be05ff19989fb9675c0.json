@@ -1,0 +1,1 @@
+{"id":"d80f5a02bb415be05ff19989fb9675c0","fullName":"supabase-schema.spec.ts:92:7","name":"TC-DB15: GET /alerts with anon key respects RLS (200 or 401/403)","status":"passed","testResultsByEnv":{"default":"8dca8ace8e1b2708a669aef80ffeccc7"}}

@@ -1,0 +1,1 @@
+{"id":"474487983f6ad5a71c71fcedb5661b9b","fullName":"day_3-ai-generated/eventhub-api.spec.ts:438:7","name":"TC02 - POST /api/events returns 401 without an auth token","status":"passed","testResultsByEnv":{"default":"12fb4ecb7bca2676d0d4126534d2cbba"}}

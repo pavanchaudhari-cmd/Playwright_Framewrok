@@ -1,0 +1,1 @@
+{"id":"76571495e73e437aa8f0849563218a36","fullName":"day_3-ai-generated/eventhub-api.spec.ts:665:7","name":"TC08 - GET /api/bookings returns 401 without auth","status":"passed","testResultsByEnv":{"default":"cef43ee3945206bfc197e4f2c549a1db"}}

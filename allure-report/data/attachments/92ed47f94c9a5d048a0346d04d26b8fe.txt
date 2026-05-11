@@ -1,0 +1,22 @@
+Bookings Status: 200
+Bookings Body: {
+  success: true,
+  data: [
+    {
+      id: 29194,
+      eventId: 3,
+      userId: 6625,
+      customerName: 'Playwright Tester',
+      customerEmail: 'pw.tester@mailinator.com',
+      customerPhone: '9876543210',
+      quantity: 1,
+      totalPrice: '300',
+      status: 'confirmed',
+      bookingRef: 'D-HU948C',
+      createdAt: '2026-05-04T12:04:04.664Z',
+      updatedAt: '2026-05-04T12:04:04.664Z',
+      event: [Object]
+    }
+  ],
+  pagination: { total: 1, page: 1, limit: 10, totalPages: 1 }
+}

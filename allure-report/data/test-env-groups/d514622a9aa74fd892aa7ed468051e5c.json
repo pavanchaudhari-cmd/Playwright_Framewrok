@@ -1,0 +1,1 @@
+{"id":"d514622a9aa74fd892aa7ed468051e5c","fullName":"supabase-schema.spec.ts:81:7","name":"TC-DB13: GET /alerts with service key returns 200 and an array","status":"passed","testResultsByEnv":{"default":"42478f963b1592b928c21c2735d5588d"}}

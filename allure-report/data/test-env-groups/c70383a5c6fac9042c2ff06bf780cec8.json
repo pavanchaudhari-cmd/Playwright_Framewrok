@@ -1,0 +1,1 @@
+{"id":"c70383a5c6fac9042c2ff06bf780cec8","fullName":"day_3-ai-generated/eventhub-api.spec.ts:652:7","name":"TC07 - GET /api/bookings with status=confirmed filter returns only confirmed bookings","status":"passed","testResultsByEnv":{"default":"62aaf5b6e4e7475bb3ad7a9374d223e2"}}

@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/db_fixtures';
+import { epic, feature, story, severity } from 'allure-js-commons';
 
 const EXPECTED_COLUMNS: Record<string, { type: string; format: string; maxLength?: number }> = {
   id:          { type: 'string', format: 'character varying',        maxLength: 36 },
@@ -10,9 +11,16 @@ const EXPECTED_COLUMNS: Record<string, { type: string; format: string; maxLength
 
 test.describe('Supabase — alerts table schema', { tag: ['@db', '@schema'] }, () => {
 
+  test.beforeEach(async () => {
+    await epic('EventHub');
+    await feature('Database Schema');
+  });
+
   // ── Connection ────────────────────────────────────────────────────────────────
 
   test('TC-DB01: Supabase REST API is reachable with service key', async ({ serviceRequest, supabaseUrl }) => {
+    await story('API Connectivity');
+    await severity('blocker');
     const res = await serviceRequest.get(`${supabaseUrl}/rest/v1/`);
     expect(res.status()).toBe(200);
     const body = await res.json();
@@ -22,22 +30,30 @@ test.describe('Supabase — alerts table schema', { tag: ['@db', '@schema'] }, (
   // ── Table existence ───────────────────────────────────────────────────────────
 
   test('TC-DB02: alerts table exists in the schema', async ({ schemaDefinitions }) => {
+    await story('Table Existence');
+    await severity('critical');
     expect(schemaDefinitions, 'alerts table must be in definitions').toHaveProperty('alerts');
   });
 
   test('TC-DB03: eval_runs table (FK target) exists in the schema', async ({ schemaDefinitions }) => {
+    await story('Table Existence');
+    await severity('critical');
     expect(schemaDefinitions, 'eval_runs must exist as FK target').toHaveProperty('eval_runs');
   });
 
   // ── Column presence ───────────────────────────────────────────────────────────
 
   test('TC-DB04: all expected columns are present', async ({ alertsColumns }) => {
+    await story('Column Schema');
+    await severity('critical');
     for (const col of Object.keys(EXPECTED_COLUMNS)) {
       expect(alertsColumns, `column "${col}" is missing`).toHaveProperty(col);
     }
   });
 
   test('TC-DB05: no unexpected extra columns', async ({ alertsColumns }) => {
+    await story('Column Schema');
+    await severity('normal');
     expect(Object.keys(alertsColumns).sort()).toEqual(Object.keys(EXPECTED_COLUMNS).sort());
   });
 
@@ -45,6 +61,8 @@ test.describe('Supabase — alerts table schema', { tag: ['@db', '@schema'] }, (
 
   for (const [col, meta] of Object.entries(EXPECTED_COLUMNS)) {
     test(`TC-DB06-${col}: column "${col}" has type="${meta.type}" format="${meta.format}"`, async ({ alertsColumns }) => {
+      await story('Column Types');
+      await severity('normal');
       expect(alertsColumns[col].type,   `${col}.type mismatch`).toBe(meta.type);
       expect(alertsColumns[col].format, `${col}.format mismatch`).toBe(meta.format);
     });
@@ -53,43 +71,61 @@ test.describe('Supabase — alerts table schema', { tag: ['@db', '@schema'] }, (
   // ── Constraints ───────────────────────────────────────────────────────────────
 
   test('TC-DB07: id is the primary key', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('critical');
     expect(alertsColumns.id.description as string).toContain('<pk/>');
   });
 
   test('TC-DB08: id has maxLength 36', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('normal');
     expect(alertsColumns.id.maxLength).toBe(36);
   });
 
   test('TC-DB09: eval_run_id is a FK to eval_runs.id', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('critical');
     expect(alertsColumns.eval_run_id.description as string).toContain("fk table='eval_runs' column='id'");
   });
 
   test('TC-DB10: eval_run_id has maxLength 36', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('normal');
     expect(alertsColumns.eval_run_id.maxLength).toBe(36);
   });
 
   test('TC-DB11: severity has maxLength 50', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('normal');
     expect(alertsColumns.severity.maxLength).toBe(50);
   });
 
   test('TC-DB12: created_at defaults to now()', async ({ alertsColumns }) => {
+    await story('Column Constraints');
+    await severity('normal');
     expect(alertsColumns.created_at.default).toBe('now()');
   });
 
   // ── Access control ────────────────────────────────────────────────────────────
 
   test('TC-DB13: GET /alerts with service key returns 200 and an array', async ({ serviceRequest, supabaseUrl }) => {
+    await story('Access Control');
+    await severity('critical');
     const res = await serviceRequest.get(`${supabaseUrl}/rest/v1/alerts`);
     expect(res.status()).toBe(200);
     expect(Array.isArray(await res.json())).toBe(true);
   });
 
   test('TC-DB14: GET /alerts without any key returns 401', async ({ request, supabaseUrl }) => {
+    await story('Access Control');
+    await severity('critical');
     const res = await request.get(`${supabaseUrl}/rest/v1/alerts`);
     expect(res.status()).toBe(401);
   });
 
   test('TC-DB15: GET /alerts with anon key respects RLS (200 or 401/403)', async ({ anonRequest, supabaseUrl }) => {
+    await story('Access Control');
+    await severity('normal');
     const res = await anonRequest.get(`${supabaseUrl}/rest/v1/alerts`);
     expect([200, 401, 403], `unexpected status ${res.status()} with anon key`).toContain(res.status());
   });
@@ -97,6 +133,8 @@ test.describe('Supabase — alerts table schema', { tag: ['@db', '@schema'] }, (
   // ── Query ─────────────────────────────────────────────────────────────────────
 
   test('TC-DB16: available tables in schema', async ({ schemaDefinitions }) => {
+    await story('Table Existence');
+    await severity('minor');
     const tables = Object.keys(schemaDefinitions);
     console.log('Available tables:', tables);
     expect(tables.length).toBeGreaterThan(0);

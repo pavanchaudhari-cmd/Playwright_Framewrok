@@ -1,0 +1,1 @@
+{"id":"4626aa2d1e1adaca0c5e93bb4206fdef","fullName":"day_3-ai-generated/eventhub-api.spec.ts:624:7","name":"TC05 - POST /api/bookings returns 400 when quantity exceeds 10","status":"passed","testResultsByEnv":{"default":"e624996e490e089c57fb60cc71f0e85a"}}

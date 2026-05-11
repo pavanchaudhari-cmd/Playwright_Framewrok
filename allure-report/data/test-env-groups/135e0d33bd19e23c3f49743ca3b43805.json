@@ -1,0 +1,1 @@
+{"id":"135e0d33bd19e23c3f49743ca3b43805","fullName":"day_3-ai-generated/eventhub-api.spec.ts:446:7","name":"TC03 - POST /api/events returns 400 when required fields are missing","status":"passed","testResultsByEnv":{"default":"edea1ea80e1c5c83587c287b34729345"}}

@@ -1,0 +1,1 @@
+{"id":"6d3f31780e8d48a52aabcdf398207e9d","fullName":"day_3-ai-generated/eventhub-api.spec.ts:496:7","name":"TC07 - DELETE /api/events/{id} removes the event and returns success","status":"passed","testResultsByEnv":{"default":"689850753075313cb1cef879b8290e88"}}

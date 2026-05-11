@@ -1,0 +1,1 @@
+{"id":"8e6b62afb8c4f285f4318c9695789c33","fullName":"day_3-ai-generated/eventhub-api.spec.ts:176:7","name":"TC01 - returns 200 with a valid JWT token on correct credentials","status":"passed","testResultsByEnv":{"default":"4f1b3d380f798ccb000c813a796a3435"}}

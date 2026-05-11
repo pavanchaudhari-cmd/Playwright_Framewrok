@@ -1,0 +1,1 @@
+{"id":"6c3cb33cb4e567eb3ca74f2e0a1a6db7","fullName":"day_2/day2.spec.ts:103:5","name":"DELETE /api/bookings/:id - cancel booking with auth token","status":"passed","testResultsByEnv":{"default":"6c7b7920cdd8543e8532e0dfd4e538b9"}}

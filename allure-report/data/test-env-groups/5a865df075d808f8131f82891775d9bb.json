@@ -1,0 +1,1 @@
+{"id":"5a865df075d808f8131f82891775d9bb","fullName":"supabase-schema.spec.ts:87:7","name":"TC-DB14: GET /alerts without any key returns 401","status":"passed","testResultsByEnv":{"default":"8a7aae523dea1465d885e46a4d77a26d"}}

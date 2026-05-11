@@ -1,0 +1,1 @@
+{"id":"6af7a20a9b0906acf0831d88141ec25b","fullName":"supabase-schema.spec.ts:47:9","name":"TC-DB06-severity: column \"severity\" has type=\"string\" format=\"character varying\"","status":"passed","testResultsByEnv":{"default":"90155d4241475396f4c9f27822645f16"}}

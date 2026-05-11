@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const API_BASE_URL = process.env.API_BASE_URL || 'https://api.eventhub.rahulshettyacademy.com/api/docs/';
-const UI_BASE_URL  = process.env.UI_BASE_URL  || 'https://eventhub.rahulshettyacademy.com/';
+const API_BASE_URL = process.env.API_BASE_URL;
+const UI_BASE_URL  = process.env.UI_BASE_URL;
 
 export default defineConfig({
   testDir: './tests',
@@ -18,6 +18,7 @@ export default defineConfig({
       outputFile: './monocart-report/index.html',
       columns: (defaultColumns: object[]) => defaultColumns,
     }],
+    ['allure-playwright', { outputFolder: 'allure-results', detail: true, suiteTitle: false }],
   ],
   use: {
     trace: 'on-first-retry',

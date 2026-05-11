@@ -1,0 +1,1 @@
+{"id":"972513d2f602bcc1698f934f6e671343","fullName":"supabase-schema.spec.ts:47:9","name":"TC-DB06-id: column \"id\" has type=\"string\" format=\"character varying\"","status":"passed","testResultsByEnv":{"default":"f44c3b26c84295ab1221c5f0768cca75"}}

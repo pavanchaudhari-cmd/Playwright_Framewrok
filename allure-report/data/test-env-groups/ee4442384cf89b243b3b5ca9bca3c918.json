@@ -1,0 +1,1 @@
+{"id":"ee4442384cf89b243b3b5ca9bca3c918","fullName":"day_3-ai-generated/eventhub-api.spec.ts:123:7","name":"TC02 - returns 400 when email is already registered","status":"passed","testResultsByEnv":{"default":"ca90fb0d97bef01924f933cc7adbfdc9"}}

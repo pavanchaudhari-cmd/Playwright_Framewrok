@@ -1,0 +1,1 @@
+{"id":"65202c54bbf7201f4ef98272458099d3","fullName":"day_3-ai-generated/eventhub-api.spec.ts:714:7","name":"TC13 - DELETE /api/bookings/{id} cancels the booking","status":"passed","testResultsByEnv":{"default":"ac151611740dad6b483a0b1a6e628b1e"}}

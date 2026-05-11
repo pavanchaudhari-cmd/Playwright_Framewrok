@@ -1,0 +1,2 @@
+Delete Status: 200
+Delete Body: { success: true, message: 'Booking cancelled' }
